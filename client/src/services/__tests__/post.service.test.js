@@ -1,7 +1,17 @@
 import PostService from '../post.service';
 import api from '../api';
 
-jest.mock('../api');
+jest.mock('../api', () => ({
+  __esModule: true,
+  default: {
+    get: jest.fn(() => Promise.resolve({ data: {} })),
+    post: jest.fn(() => Promise.resolve({ data: {} })),
+    interceptors: {
+      request: { use: jest.fn() },
+      response: { use: jest.fn() },
+    },
+  },
+}));
 
 describe('PostService', () => {
   beforeEach(() => {

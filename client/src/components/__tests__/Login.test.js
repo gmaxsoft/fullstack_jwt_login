@@ -5,9 +5,11 @@ import Login from '../Login';
 import AuthService from '../../services/auth.service';
 
 jest.mock('../../services/auth.service');
+
+const mockNavigate = jest.fn();
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
-  useNavigate: () => jest.fn(),
+  useNavigate: () => mockNavigate,
 }));
 
 const renderWithRouter = (component) => {
@@ -17,6 +19,7 @@ const renderWithRouter = (component) => {
 describe('Login Component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    mockNavigate.mockClear();
     window.location.reload = jest.fn();
   });
 
@@ -48,9 +51,6 @@ describe('Login Component', () => {
   });
 
   it('should call AuthService.login on form submit', async () => {
-    const mockNavigate = jest.fn();
-    jest.spyOn(require('react-router-dom'), 'useNavigate').mockReturnValue(mockNavigate);
-    
     AuthService.login.mockResolvedValue({
       accessToken: 'test-token',
       email: 'test@example.com',

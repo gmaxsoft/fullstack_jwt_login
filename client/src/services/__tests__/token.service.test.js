@@ -60,10 +60,8 @@ describe('TokenService', () => {
 
       TokenService.setUser(mockUser);
 
-      expect(localStorage.setItem).toHaveBeenCalledWith(
-        'user',
-        JSON.stringify(mockUser)
-      );
+      const savedUser = JSON.parse(localStorage.getItem('user'));
+      expect(savedUser).toEqual(mockUser);
     });
   });
 
@@ -110,7 +108,7 @@ describe('TokenService', () => {
 
       TokenService.removeUser();
 
-      expect(localStorage.removeItem).toHaveBeenCalledWith('user');
+      expect(localStorage.getItem('user')).toBeNull();
     });
   });
 });
