@@ -1,25 +1,18 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 import Login from '../Login';
 import AuthService from '../../services/auth.service';
 
 jest.mock('../../services/auth.service');
 
-const mockNavigate = jest.fn();
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useNavigate: () => mockNavigate,
-}));
-
 const renderWithRouter = (component) => {
-  return render(<BrowserRouter>{component}</BrowserRouter>);
+  return render(<MemoryRouter>{component}</MemoryRouter>);
 };
 
 describe('Login Component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    mockNavigate.mockClear();
     window.location.reload = jest.fn();
   });
 

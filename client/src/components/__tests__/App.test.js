@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 import App from '../../App';
 import AuthService from '../../services/auth.service';
 
@@ -15,9 +15,9 @@ describe('App Component', () => {
     AuthService.getCurrentUser.mockReturnValue(null);
 
     render(
-      <BrowserRouter>
+      <MemoryRouter>
         <App />
-      </BrowserRouter>
+      </MemoryRouter>
     );
 
     expect(screen.getByText('Home')).toBeInTheDocument();
@@ -33,9 +33,9 @@ describe('App Component', () => {
     AuthService.getCurrentUser.mockReturnValue(mockUser);
 
     render(
-      <BrowserRouter>
+      <MemoryRouter>
         <App />
-      </BrowserRouter>
+      </MemoryRouter>
     );
 
     expect(screen.getByText('Private')).toBeInTheDocument();
@@ -48,9 +48,9 @@ describe('App Component', () => {
     AuthService.getCurrentUser.mockReturnValue(null);
 
     render(
-      <BrowserRouter>
+      <MemoryRouter>
         <App />
-      </BrowserRouter>
+      </MemoryRouter>
     );
 
     expect(screen.queryByText('Private')).not.toBeInTheDocument();
@@ -65,9 +65,9 @@ describe('App Component', () => {
     AuthService.getCurrentUser.mockReturnValue(mockUser);
 
     render(
-      <BrowserRouter>
+      <MemoryRouter>
         <App />
-      </BrowserRouter>
+      </MemoryRouter>
     );
 
     const logoutLink = screen.getByText('Logout');

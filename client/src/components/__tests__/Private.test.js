@@ -47,8 +47,9 @@ describe('Private Component', () => {
     });
 
     await waitFor(() => {
-      expect(screen.getByText('Private Content 1')).toBeInTheDocument();
-      expect(screen.getByText('Private Content 2')).toBeInTheDocument();
+      const heading = screen.getByRole('heading', { level: 3 });
+      expect(heading).toHaveTextContent('Private Content 1');
+      expect(heading).toHaveTextContent('Private Content 2');
     });
   });
 
