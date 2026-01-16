@@ -109,14 +109,14 @@ describe('AuthService', () => {
         accessToken: 'test-access-token',
         email: 'test@example.com',
       };
-      TokenService.getUser = jest.fn().mockReturnValue(mockUser);
+      localStorage.setItem('user', JSON.stringify(mockUser));
 
       const user = AuthService.getCurrentUser();
       expect(user).toEqual(mockUser);
     });
 
     it('should return null if no user is logged in', () => {
-      TokenService.getUser = jest.fn().mockReturnValue(null);
+      localStorage.removeItem('user');
 
       const user = AuthService.getCurrentUser();
       expect(user).toBeNull();

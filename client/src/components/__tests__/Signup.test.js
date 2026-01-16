@@ -1,13 +1,16 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
 import Signup from '../Signup';
 import AuthService from '../../services/auth.service';
 
 jest.mock('../../services/auth.service');
+jest.mock('react-router-dom', () => ({
+  MemoryRouter: ({ children }) => <div>{children}</div>,
+  useNavigate: () => jest.fn(),
+}));
 
 const renderWithRouter = (component) => {
-  return render(<MemoryRouter>{component}</MemoryRouter>);
+  return render(component);
 };
 
 describe('Signup Component', () => {

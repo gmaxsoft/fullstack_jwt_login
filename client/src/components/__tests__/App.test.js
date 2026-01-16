@@ -1,10 +1,16 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
 import App from '../../App';
 import AuthService from '../../services/auth.service';
 
 jest.mock('../../services/auth.service');
+jest.mock('react-router-dom', () => ({
+  MemoryRouter: ({ children }) => <div>{children}</div>,
+  BrowserRouter: ({ children }) => <div>{children}</div>,
+  Routes: ({ children }) => <div>{children}</div>,
+  Route: ({ element }) => element,
+  Link: ({ to, children, ...props }) => <a href={to} {...props}>{children}</a>,
+}));
 
 describe('App Component', () => {
   beforeEach(() => {
@@ -14,11 +20,7 @@ describe('App Component', () => {
   it('should render navigation links', () => {
     AuthService.getCurrentUser.mockReturnValue(null);
 
-    render(
-      <MemoryRouter>
-        <App />
-      </MemoryRouter>
-    );
+    render(<App />);
 
     expect(screen.getByText('Home')).toBeInTheDocument();
     expect(screen.getByText('Log in')).toBeInTheDocument();
@@ -32,11 +34,7 @@ describe('App Component', () => {
     };
     AuthService.getCurrentUser.mockReturnValue(mockUser);
 
-    render(
-      <MemoryRouter>
-        <App />
-      </MemoryRouter>
-    );
+    render(<App />);
 
     expect(screen.getByText('Private')).toBeInTheDocument();
     expect(screen.getByText('Logout')).toBeInTheDocument();
@@ -47,11 +45,7 @@ describe('App Component', () => {
   it('should hide private link when user is not logged in', () => {
     AuthService.getCurrentUser.mockReturnValue(null);
 
-    render(
-      <MemoryRouter>
-        <App />
-      </MemoryRouter>
-    );
+    render(<App />);
 
     expect(screen.queryByText('Private')).not.toBeInTheDocument();
     expect(screen.queryByText('Logout')).not.toBeInTheDocument();
@@ -64,11 +58,7 @@ describe('App Component', () => {
     };
     AuthService.getCurrentUser.mockReturnValue(mockUser);
 
-    render(
-      <MemoryRouter>
-        <App />
-      </MemoryRouter>
-    );
+    render(<App />);
 
     const logoutLink = screen.getByText('Logout');
     logoutLink.click();

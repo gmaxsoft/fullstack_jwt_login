@@ -8,16 +8,18 @@ import '@testing-library/jest-dom';
 const localStorageMock = (() => {
   let store = {};
   return {
-    getItem: jest.fn((key) => store[key] || null),
-    setItem: jest.fn((key, value) => {
+    getItem: (key) => {
+      return store[key] || null;
+    },
+    setItem: (key, value) => {
       store[key] = value.toString();
-    }),
-    removeItem: jest.fn((key) => {
+    },
+    removeItem: (key) => {
       delete store[key];
-    }),
-    clear: jest.fn(() => {
+    },
+    clear: () => {
       store = {};
-    }),
+    },
   };
 })();
 
