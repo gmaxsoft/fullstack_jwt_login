@@ -4,10 +4,6 @@ import Login from '../Login';
 import AuthService from '../../services/auth.service';
 
 jest.mock('../../services/auth.service');
-jest.mock('react-router-dom', () => ({
-  MemoryRouter: ({ children }) => <div>{children}</div>,
-  useNavigate: () => jest.fn(),
-}));
 
 const renderWithRouter = (component) => {
   return render(component);
@@ -22,7 +18,7 @@ describe('Login Component', () => {
   it('should render login form', () => {
     renderWithRouter(<Login />);
     
-    expect(screen.getByText('Log in')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /log in/i })).toBeInTheDocument();
     expect(screen.getByPlaceholderText('Your E-mail')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('Your password')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /log in/i })).toBeInTheDocument();

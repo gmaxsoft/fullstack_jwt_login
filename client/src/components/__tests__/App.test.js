@@ -1,16 +1,11 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import App from '../../App';
 import AuthService from '../../services/auth.service';
 
 jest.mock('../../services/auth.service');
-jest.mock('react-router-dom', () => ({
-  MemoryRouter: ({ children }) => <div>{children}</div>,
-  BrowserRouter: ({ children }) => <div>{children}</div>,
-  Routes: ({ children }) => <div>{children}</div>,
-  Route: ({ element }) => element,
-  Link: ({ to, children, ...props }) => <a href={to} {...props}>{children}</a>,
-}));
+jest.mock('react-router-dom');
+
+import App from '../../App';
 
 describe('App Component', () => {
   beforeEach(() => {
